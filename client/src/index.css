@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+}
+
+#link {
+  color: white;
+  margin: 0 15px;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: 1000ms opacity ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: 1000ms opacity ease-in;
+}
+
+#container {
+  width: 400px;
+  margin-top: 50px;
+}
+
+.remove-btn {
+  float: right;
+}
