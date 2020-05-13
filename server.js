@@ -1,11 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const config = require('config')
 
 const app = express()
 app.use(express.json())
 
 // MongoDB config
-const db = require('./config/keys').mongoURI
+const db = config.get('mongoURI')
 mongoose
     .connect(db, {
         useNewUrlParser: true,
