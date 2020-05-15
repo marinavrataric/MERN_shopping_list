@@ -8,7 +8,7 @@ const auth = require('../middleware/auth')
 const User = require('../models/User')
 
 // @route   POST /api/auth
-// @desc    Create new user
+// @desc    Login user
 // @access  Public
 router.post('/', (req, res) => {
 
@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
 
     // validation
     if (!email || !password) {
-        return res.json({ msg: 'Fileds cannot be empty' })
+        return res.status(400).json({ msg: 'Fileds cannot be empty' })
     }
 
     // check for user
