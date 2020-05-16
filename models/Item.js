@@ -9,6 +9,10 @@ const ItemSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
     }
 })
 

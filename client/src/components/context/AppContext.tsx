@@ -8,7 +8,7 @@ export const AppContext = createContext({
     modalLogout: false,
     setModalLogout: (modalLogout: boolean) => { },
     state: {
-       user: {name: ''},
+       user: {name: '', _id: null},
        token: '',
        msg: '',
        isAuthenticated: false,

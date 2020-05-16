@@ -19,14 +19,16 @@ function Home() {
 
     // load all items
     useEffect(() => {
-        setIsLoading(true)
-        axios
-            .get('/api/items')
-            .then(res => {
-                dispatch({ type: 'GET_ITEMS', payload: res.data })
-                setIsLoading(false)
-            })
-            .catch(err => console.log('err', err))
+        if (state.user) {
+            setIsLoading(true)
+            axios
+                .get(`/api/items/${state.user._id}`)
+                .then(res => {
+                    dispatch({ type: 'GET_ITEMS', payload: res.data })
+                    setIsLoading(false)
+                })
+                .catch(err => console.log('err', err))
+        }
 
         if (state.isAuthenticated) setMsg(null)
     }, [state])
@@ -34,20 +36,22 @@ function Home() {
     // add new item
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        let name = { "name": inputRef.current?.value }
+        
+        const config = { headers: { "x-auth-token": `${token}` } }
+        const value = { "name": inputRef.current?.value, 'userId': state.user && state.user._id }
         axios
-            .post('/api/items', name, { headers: { "x-auth-token": `${token}` } })
+            .post('/api/items', value, config)
             .then(res => dispatch({ type: 'ADD_ITEM', payload: res.data }))
-            .catch(err => {
-                if (!state.isAuthenticated) setMsg('You must be logged in')
-            })
+            .catch(err => (!state.isAuthenticated) && setMsg('You must be logged in'))
+
         inputRef.current && (inputRef.current.value = '')
     }
 
     // delete item
     const handleDelete = (id: number) => {
+        const config = { headers: { "x-auth-token": `${token}` } }
         axios
-            .delete(`/api/items/${id}`, { headers: { "x-auth-token": `${token}` } })
+            .delete(`/api/items/${id}`, config)
             .then(() => dispatch({ type: 'DELETE_ITEM', id: id }))
             .catch(err => (!state.isAuthenticated) && setMsg('You must be logged in'))
     }

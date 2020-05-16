@@ -4,12 +4,12 @@ const auth = require('../middleware/auth')
 
 const Item = require('../models/Item')
 
-// @route   GET
+// @route   GET /api/items/:id
 // @desc    Get all items
-// @access  Public
-router.get('/', (req, res) => {
+// @access  Private
+router.get('/:id', (req, res) => {
     Item
-        .find()
+        .find({ userId: req.params.id })
         .sort({ date: -1 })
         .then(item => res.json(item))
         .catch(err => res.json(err))
@@ -19,10 +19,11 @@ router.get('/', (req, res) => {
 // @desc    Create new item
 // @access  Private
 router.post('/', auth, (req, res) => {
-    const { name } = req.body
+    const { name, userId } = req.body
 
     const newItem = new Item({
-        name: name
+        name: name,
+        userId: userId
     })
 
     newItem
@@ -30,7 +31,7 @@ router.post('/', auth, (req, res) => {
         .then(item => res.json(item))
 })
 
-// @route   DELETE
+// @route   DELETE /api/items/:id
 // @desc    Delete item
 // @access  Private
 router.delete('/:id', auth, (req, res) => {
