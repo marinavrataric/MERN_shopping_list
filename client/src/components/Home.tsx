@@ -6,7 +6,7 @@ import { AppContext } from './context/AppContext'
 
 function Home() {
 
-    const [input, setInput] = useState('')
+    const inputRef = useRef<HTMLInputElement>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [msg, setMsg] = useState<null | string>(null)
     const [isopen, setisopen] = useState(true)
@@ -34,13 +34,14 @@ function Home() {
     // add new item
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        let name = { "name": input }
+        let name = { "name": inputRef.current?.value }
         axios
             .post('/api/items', name, { headers: { "x-auth-token": `${token}` } })
             .then(res => dispatch({ type: 'ADD_ITEM', payload: res.data }))
             .catch(err => {
                 if (!state.isAuthenticated) setMsg('You must be logged in')
             })
+        inputRef.current && (inputRef.current.value = '')
     }
 
     // delete item
@@ -72,12 +73,12 @@ function Home() {
                     <Form onSubmit={handleSubmit}>
                         <FormGroup>
                             <Label>Add item</Label>
-                            <Input type='text' onChange={(e: any) => setInput(e.target.value)}></Input>
+                            <input type='text' ref={inputRef} id='inputItem'></input>
                         </FormGroup>
                     </Form>
                     <TransitionGroup>
                         {items.map((item: { name: string, _id: number }) => (
-                            <CSSTransition key={item._id} timeout={200} classNames='fade'>
+                            <CSSTransition key={item._id} timeout={500} classNames='fade'>
                                 <ListGroupItem>
                                     {item.name}
                                     <Button

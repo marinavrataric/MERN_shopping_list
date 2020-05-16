@@ -23,7 +23,7 @@ function App() {
                 return {
                     ...state,
                     isAuthenticated: true,
-                    user: action.payload
+                    ...action.payload
                 }
             case 'REGISTER_SUCCESS':
             case 'LOGIN_SUCCESS':
@@ -31,7 +31,7 @@ function App() {
                 return {
                     ...state,
                     token: action.payload.token,
-                    user: action.payload.user,
+                    ...action.payload.user,
                     isAuthenticated: true,
                     msg: action.payload.msg,
                     msg_token: null

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Nav, NavItem, Navbar, NavbarBrand, NavbarToggler, Collapse, Container } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
@@ -8,14 +8,19 @@ import Logout from '../Logout'
 
 function Links() {
 
-    const { modalRegister, setModalRegister, modalLogin, setModalLogin, state, dispatch, modalLogout, setModalLogout } = useContext(AppContext)
+    const { modalRegister, setModalRegister, modalLogin, setModalLogin, state, modalLogout, setModalLogout } = useContext(AppContext)
 
     const [isCollapsed, setIsCollapsed] = useState(false)
+    const [name, setname] = useState('')
 
     const toggleCollapse = () => setIsCollapsed(!isCollapsed)
     const toggleModalReg = () => setModalRegister(!modalRegister)
-    const toggleModalLogin = () => !state.isAuthenticated && setModalLogin(!modalLogin)
+    const toggleModalLogin = () => (!state.isAuthenticated) && setModalLogin(!modalLogin)
     const toggleModalLogout = () => state.isAuthenticated && setModalLogout(!modalLogout)
+
+    useEffect(() => {
+        state.user && setname(state.user.name)
+    }, [state])
 
     return (
         <Navbar color='dark' dark expand="sm">
@@ -32,7 +37,9 @@ function Links() {
                             <Register />
                         </NavItem>
                         <NavItem>
-                            <NavLink to='/' id='link' onClick={toggleModalLogin}>Log in</NavLink>
+                            <NavLink to='/' id='link' onClick={toggleModalLogin}>
+                                {state.isAuthenticated ? `Welcome ${name}` : 'Log in'}
+                            </NavLink>
                             <Login />
                         </NavItem>
                         <NavItem>

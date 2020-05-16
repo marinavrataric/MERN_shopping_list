@@ -13,7 +13,7 @@ body {
 
 .fade-enter-active {
   opacity: 1;
-  transition: 1000ms opacity ease-in;
+  transition: 300ms opacity ease-in;
 }
 
 .fade-exit {
@@ -22,14 +22,33 @@ body {
 
 .fade-exit-active {
   opacity: 0;
-  transition: 1000ms opacity ease-in;
+  transition: 300ms opacity ease-in;
 }
 
 #container {
   width: 400px;
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .remove-btn {
   float: right;
+}
+
+#inputItem {
+  width: 370px;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  color: #495057;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  display: block;
+}
+
+#inputItem:focus {
+  outline: none;
 }
