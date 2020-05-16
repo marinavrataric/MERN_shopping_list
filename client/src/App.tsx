@@ -72,7 +72,7 @@ function App() {
             .get('/api/auth/user', config)
             .then(res => dispatch({ type: 'USER_LOADED', payload: res.data }))
             .catch(err => dispatch({ type: 'AUTH_ERROR', payload: err.response.data.msg }))
-    }, [])
+    }, [state.isAuthenticated])
 
     return (
         <div>

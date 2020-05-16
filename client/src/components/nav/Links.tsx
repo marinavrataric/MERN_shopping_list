@@ -43,7 +43,7 @@ function Links() {
                             <Login />
                         </NavItem>
                         <NavItem>
-                            <NavLink to='/' id='link' onClick={toggleModalLogout}>Log out</NavLink>
+                            <NavLink to='/' id='link' onClick={toggleModalLogout}> {state.isAuthenticated && 'Log out'}</NavLink>
                             <Logout />
                         </NavItem>
                     </Nav>

@@ -81,7 +81,7 @@ function Home() {
                         </FormGroup>
                     </Form>
                     <TransitionGroup>
-                        {items.map((item: { name: string, _id: number }) => (
+                        {state.isAuthenticated && items.map((item: { name: string, _id: number }) => (
                             <CSSTransition key={item._id} timeout={500} classNames='fade'>
                                 <ListGroupItem>
                                     {item.name}
